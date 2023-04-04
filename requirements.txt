@@ -1,0 +1,15 @@
+click
+colorama
+Flask
+Flask-Cors
+importlib-metadata
+itsdangerous
+Jinja2
+MarkupSafe
+marshmallow
+mysql-connector-python
+packaging
+protobuf
+six
+Werkzeug
+zipp
