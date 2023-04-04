@@ -4,6 +4,7 @@ Flask
 Flask-Cors
 importlib-metadata
 itsdangerous
+gunicorn
 Jinja2
 MarkupSafe
 marshmallow
