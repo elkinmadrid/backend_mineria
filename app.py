@@ -26,7 +26,7 @@ def login():
             # check user exists
             _query = querys()
             result = _query.get_user_by_username_and_password(
-            _username, _password)
+                _username, _password)
 
             print(result)
 
@@ -36,7 +36,7 @@ def login():
 
             else:
                 resp = jsonify(
-                        {'message': 'Bad Request - invalid credendtials'})
+                    {'message': 'Bad Request - invalid credendtials'})
                 resp.status_code = 400
                 return resp
 
@@ -48,12 +48,33 @@ def login():
             cursor.close()
             conn.close()
 
+
 @app.route('/api/v1/info-moto', methods=['GET'])
 def info():
 
-    querys_ = querys()
-    result = querys_.get_all()
-    return {'message': 'Exitoso', 'data': result}, 200
+    try:
+
+        querys_ = querys()
+        results = querys_.get_all()
+        data = []
+        for result in results:
+
+            data.append({
+                "id": result[0],
+                "anio": result[4],
+                "color": result[5],
+                "kilometraje": result[6],
+                "marca": result[2],
+                "modelo": result[3],
+                "precio": result[1],
+                "fecha_creacion": result[7]
+            })
+        return {'message': 'Exitoso', 'data': data}, 200
+
+    except Exception as inst:
+        print(inst)
+        return {'message': 'Error inesperado'}, 500
+
 
 @app.route('/api/v1/info-moto/<id>', methods=['DELETE'])
 def delete(id):
@@ -71,9 +92,11 @@ def delete(id):
         print(inst)
         return {'message': 'Error inesperado'}, 500
 
+
 @app.route('/api/v1/info-moto/<id>', methods=['GET'])
 def get_info_by_id(id):
     return id
+
 
 @app.route('/api/v1/info-moto', methods=['POST'])
 def create_info():
@@ -91,6 +114,7 @@ def create_info():
     except Exception as inst:
         print(inst)
         return {'message': 'Error inesperado'}, 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)
