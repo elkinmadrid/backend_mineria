@@ -116,5 +116,23 @@ def create_info():
         return {'message': 'Error inesperado'}, 500
 
 
+@app.route('/api/v1/info-moto/<id>', methods=['PUT'])
+def update_info(id):
+
+    try:
+
+        schema = motoSchema()
+        errors = schema.validate(request.json)
+        if errors:
+            return {'message': 'Validation errors', 'errors': errors}, 400
+        query_ = querys()
+        query_.update_record(request.json, id)
+        print(request.json)
+        return {'message': 'Informacion actualizada'}, 200
+
+    except Exception as inst:
+        print(inst)
+        return {'message': 'Error inesperado'}, 500
+
 if __name__ == "__main__":
     app.run(debug=True)

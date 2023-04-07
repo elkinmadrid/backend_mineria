@@ -41,3 +41,19 @@ class querys:
         cursor.execute(query, datos)
         self.conexion_.conector.commit()
 
+    def update_record(self, data, id):
+
+        update_sql = """   UPDATE `motos` SET 
+        `precio`= %s,
+        `marca`=%s,        `modelo`=%s,
+        `ano`=%s,`color`=%s,
+        `kilometraje`=%s
+        WHERE  `id` = %s """
+
+        datos = (float(data['precio']), data['marca'], data['modelo'], int(data['anio']),
+                 data['color'], data['kilometraje'], id)
+
+        cursor = self.conexion_.conector.cursor()
+        cursor.execute(update_sql, datos)
+        self.conexion_.conector.commit()
+
