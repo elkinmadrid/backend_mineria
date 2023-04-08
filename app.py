@@ -50,6 +50,8 @@ def info():
 
     try:
 
+        print(request.cookies)
+
         querys_ = querys()
         results = querys_.get_all()
         data = []
