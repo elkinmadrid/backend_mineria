@@ -51,6 +51,14 @@ def info():
     try:
 
         print(request.cookies)
+        user_cookie = request.cookies.get('user_cookie')
+
+        if not user_cookie:
+            resp = jsonify(
+                    {'message': 'Unauthorized'})
+            resp.status_code = 401
+            return resp
+
 
         querys_ = querys()
         results = querys_.get_all()
