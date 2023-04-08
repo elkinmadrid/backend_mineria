@@ -45,6 +45,12 @@ def login():
 
 
 
+@app.route('/logout', methods=['POST'])
+def eliminar_cookie():
+    response = jsonify({'mensaje': 'You have successfully logged out'})
+    response.delete_cookie('user_cookie')
+    return response
+
 @app.route('/api/v1/info-moto', methods=['GET'])
 def info():
 
