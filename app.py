@@ -1,4 +1,4 @@
-from flask import Flask, request, session, jsonify
+from flask import Flask, request, session, jsonify, Response
 from flask_cors import CORS
 
 from api.motoSchema import *
@@ -6,14 +6,12 @@ from api.motoSchema import *
 from api.querys import *
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.route('/login', methods=['POST'])
 def login():
 
-    conn = None
-    cursor = None
     try:
         _json = request.json
         _username = _json['username']
@@ -31,8 +29,15 @@ def login():
             print(result)
 
             if result:
-                session['username'] = result[1]
-                return jsonify({'message': 'You are logged in successfully'})
+                    # Crear una respuesta HTTP
+                response = Response('You are logged in successfully')
+
+                # Establecer la cookie en la respuesta
+                response.set_cookie(key='logged_in', value=_username)
+                response._status_code = 200
+                response.access_control_allow_credentials = True
+                response.content_type = 'application/json'
+                return response
 
             else:
                 resp = jsonify(
@@ -43,10 +48,6 @@ def login():
     except Exception as e:
         print(e)
 
-    finally:
-        if cursor and conn:
-            cursor.close()
-            conn.close()
 
 
 @app.route('/api/v1/info-moto', methods=['GET'])
