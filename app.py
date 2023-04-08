@@ -6,7 +6,7 @@ from api.motoSchema import *
 from api.querys import *
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 
 @app.route('/login', methods=['POST'])
@@ -30,13 +30,8 @@ def login():
 
             if result:
                     # Crear una respuesta HTTP
-                response = Response('You are logged in successfully')
-
-                # Establecer la cookie en la respuesta
-                response.set_cookie(key='logged_in', value=_username)
-                response._status_code = 200
-                response.access_control_allow_credentials = True
-                response.content_type = 'application/json'
+                response = jsonify({'message': 'You are logged in successfully'}, status=200)
+                response.set_cookie('my_cookie', 'cookie_value', samesite='None', secure=True)
                 return response
 
             else:
