@@ -86,6 +86,15 @@ def info():
 def delete(id):
 
     try:
+        print(request.cookies)
+        user_cookie = request.cookies.get('user_cookie')
+
+        if not user_cookie:
+            resp = jsonify(
+                    {'message': 'Unauthorized'})
+            resp.status_code = 401
+            return resp
+
         if not id:
             return {'message': 'id requerido'}
 
@@ -108,6 +117,15 @@ def get_info_by_id(id):
 def create_info():
     try:
 
+        print(request.cookies)
+        user_cookie = request.cookies.get('user_cookie')
+
+        if not user_cookie:
+            resp = jsonify(
+                    {'message': 'Unauthorized'})
+            resp.status_code = 401
+            return resp
+
         schema = motoSchema()
         errors = schema.validate(request.json)
         if errors:
@@ -126,6 +144,15 @@ def create_info():
 def update_info(id):
 
     try:
+
+        print(request.cookies)
+        user_cookie = request.cookies.get('user_cookie')
+
+        if not user_cookie:
+            resp = jsonify(
+                    {'message': 'Unauthorized'})
+            resp.status_code = 401
+            return resp
 
         schema = motoSchema()
         errors = schema.validate(request.json)
