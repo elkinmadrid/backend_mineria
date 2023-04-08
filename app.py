@@ -30,8 +30,8 @@ def login():
 
             if result:
                     # Crear una respuesta HTTP
-                response = jsonify({'message': 'You are logged in successfully'}, status=200)
-                response.set_cookie('my_cookie', 'cookie_value', samesite='None', secure=True)
+                response = jsonify({'message': 'You are logged in successfully'})
+                response.set_cookie('user_cookie', _username, samesite='None', secure=True)
                 return response
 
             else:
