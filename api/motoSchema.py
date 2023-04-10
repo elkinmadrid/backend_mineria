@@ -8,4 +8,4 @@ class motoSchema(Schema):
     modelo = fields.Str(required=True)
     anio = fields.Integer(required=True)
     color = fields.Str(required=True)
-    kilometraje = fields.Str(required=True)
+    kilometraje = fields.Float(required=True)

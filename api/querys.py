@@ -26,7 +26,7 @@ class querys:
 
     def get_all(self):
         
-        query = 'SELECT * FROM `motos` ORDER BY `ID` DESC limit 100'
+        query = 'SELECT * FROM `motos` ORDER BY `ID` DESC'
 
         cursor = self.conexion_.conector.cursor()
         cursor.execute(query)
